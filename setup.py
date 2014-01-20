@@ -7,7 +7,7 @@ import sys
 
 if 'sdist' in sys.argv:
     import mmf_release_tools
-    version = mmf_release_tools.generate_release_version(".".join(map(str, VERSION)), __file__)
+    version = mmf_release_tools.generate_release_version(".".join(map(str, VERSION)), __file__, git_format='%h')
     mmf_release_tools.write_release_version(version)
 else:
     with open("RELEASE-VERSION", "r") as f:
