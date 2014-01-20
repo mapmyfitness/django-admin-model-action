@@ -29,10 +29,10 @@ class ModelAction(object):
         return True
 
     def do_action(self, request, obj):
-        msg =  self.action_method( obj, request)
-        if msg is None:
-            msg = "%s is done." % self.action_name
-        messages.success(request, msg)    
+        response = self.action_method(obj, request)
+        if response is None:
+            return HttpResponseRedirect(request.path)
+        return response
             
     def __unicode__(self):
         return u"ModelAction %s" % self.action_name.__name__
@@ -47,19 +47,20 @@ class ActionAdmin(admin.ModelAdmin):
         self.model_actions = [ModelAction(action_options, model=model) for action_options in self.model_actions]
 
     def get_model_actions_for(self, request, obj):
-        return [action for action in self.model_actions if action.can_act_for ( request, obj)]
+        return [action for action in self.model_actions if action.can_act_for (request, obj)]
 
     def change_view(self, request, object_id, extra_context=None):
+        response = HttpResponseRedirect(request.path)
         if extra_context is None:
             extra_context = {}
+        
         obj = self.get_object(request, admin.util.unquote(object_id))    
         extra_context['model_actions'] = self.get_model_actions_for(request, obj)
         if request.POST.has_key('is_model_action'):
             for action in self.model_actions:
                 form_name = action.form_name
                 if request.POST.has_key(form_name):
-                    action.do_action(request, obj)
-            response = HttpResponseRedirect(request.path)
+                    response = action.do_action(request, obj)
         else:
-            response =  super(ActionAdmin, self).change_view(request, object_id, extra_context)
+            response = super(ActionAdmin, self).change_view(request, object_id, extra_context)
         return response
