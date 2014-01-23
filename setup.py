@@ -27,6 +27,9 @@ setup(
     url='http://github.com/arthur-debert/django-admin-model-action',
     packages=find_packages(),
     zip_safe=False,
+    package_data={
+        'adminmodelaction': ['templates/*.html',]
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
