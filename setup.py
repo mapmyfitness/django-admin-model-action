@@ -28,7 +28,7 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     package_data={
-        'adminmodelaction': ['templates/*.html',]
+        'adminmodelaction': ['templates/adminmodelaction/*.html',]
     },
     classifiers=[
         'Development Status :: 4 - Beta',
