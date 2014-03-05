@@ -26,6 +26,7 @@ setup(
     author_email='arthur@stimuli.com.br',
     url='http://github.com/arthur-debert/django-admin-model-action',
     packages=find_packages(),
+    include_package_data=True,
     zip_safe=False,
     package_data={
         'adminmodelaction': ['templates/adminmodelaction/*.html',]
