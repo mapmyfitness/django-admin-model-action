@@ -62,5 +62,5 @@ class ActionAdmin(admin.ModelAdmin):
                 if request.POST.has_key(form_name):
                     response = action.do_action(request, obj)
         else:
-            response = super(ActionAdmin, self).change_view(request, object_id, extra_context)
+            response =  super(ActionAdmin, self).change_view(request, object_id, extra_context = extra_context)
         return response
